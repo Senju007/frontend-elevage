@@ -2,6 +2,12 @@
   flex: 4;
 }
 
+
+
+.elevageDetails {
+  flex: 4;
+}
+
 .elevageListUser {
   display: flex;
   align-items: center;
@@ -28,4 +34,18 @@
 .elevageListDelete{
     color: red;
     cursor: pointer;
+}
+
+.tableau{
+  display: flex;
+  align-items: center;
+  height: 60%;
+}
+
+.details{
+  flex: 2;
+  padding: 20px;
+  -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  margin-left: 20px;
 }

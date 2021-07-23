@@ -11,6 +11,7 @@ import NewProduct from './pages/newProduct/NewProduct';
 import ProductList from './pages/productList/ProductList';
 import ElevageList from './pages/elevageList/elevageList';
 import Elevage from './pages/elevage/Elevage';
+import Elevage1 from './pages/elevage/elevage1';
 
 function App() {
   return (
@@ -38,7 +39,7 @@ function App() {
             <ElevageList />
           </Route>
           <Route path="/elevage">
-            <Elevage/>
+            <Elevage1/>
           </Route>
           <Route path="/product/:productId">
             <Product />
