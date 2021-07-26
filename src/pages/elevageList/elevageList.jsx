@@ -7,12 +7,6 @@ import ElevageDataService from "../../services/ElevageServices";
 
 
 export default function ElevageList() {
-
-  constructor(props) {
-    super(props);
-    this.state = {id: ''};  }
-
-
   const [elevage, setElevage] = useState([]);
   const [currentElevage, setCurrentElevage] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(-1);
@@ -94,14 +88,11 @@ export default function ElevageList() {
             <Link to={"/elevage/" + params.row.id}>
               <button className="elevageListEdit" onClick={() => setActiveElevage(params , index)} key={params.row.id}>Edit</button>
             </Link>
-            <button primary  onClick={() => setActiveElevage(params, params.row
-            .id)}
-                        key={elevage.id}>Details </button>
 
             <DeleteOutline
               className="elevageListDelete"
               
-              onClick={ () => deleteElevage(elevage.id)}
+              onClick={ () => deleteElevage(params.row.id)}
             />
           </>
         );

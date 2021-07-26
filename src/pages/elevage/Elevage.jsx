@@ -7,7 +7,9 @@ import {
   Publish,
 } from "@material-ui/icons";
 import { Link } from "react-router-dom";
-import "./elevage.css";
+
+
+
 
 export default function Elevage() {
   return (

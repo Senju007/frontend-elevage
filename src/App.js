@@ -12,6 +12,7 @@ import ProductList from './pages/productList/ProductList';
 import ElevageList from './pages/elevageList/elevageList';
 import Elevage from './pages/elevage/Elevage';
 import Elevage1 from './pages/elevage/elevage1';
+import ElevagesList1 from './pages/elevageList/elevageList1';
 
 function App() {
   return (
@@ -38,7 +39,7 @@ function App() {
           <Route path="/elevageList">
             <ElevageList />
           </Route>
-          <Route path="/elevage">
+          <Route path="/elevage/:id">
             <Elevage1/>
           </Route>
           <Route path="/product/:productId">
