@@ -13,6 +13,9 @@ import {
   WorkOutline,
   Report,
 } from "@material-ui/icons";
+import RestaurantMenuIcon from '@material-ui/icons/RestaurantMenu';
+import SecurityIcon from '@material-ui/icons/Security';
+import PollIcon from '@material-ui/icons/Poll';
 import { Link } from "react-router-dom";
 
 export default function Sidebar() {
@@ -38,32 +41,32 @@ export default function Sidebar() {
 
 
             <li className="sidebarListItem">
-              <TrendingUp className="sidebarIcon" />
-              Nourriture
+              <RestaurantMenuIcon className="sidebarIcon" />
+              Estimation
             </li>
           </ul>
         </div>
         <div className="sidebarMenu">
-          <h3 className="sidebarTitle">Quick Menu</h3>
+          <h3 className="sidebarTitle">Ressource Menu</h3>
           <ul className="sidebarList">
             <Link to="/users" className="link">
               <li className="sidebarListItem">
-                <PermIdentity className="sidebarIcon" />
-                Users
+                <RestaurantMenuIcon className="sidebarIcon" />
+                 Nourriture
+              </li>
+              <li className="sidebarListItem">
+                <SecurityIcon className="sidebarIcon" />
+                Vaccin
               </li>
             </Link>
+            <li className="sidebarListItem">
+              <PollIcon className="sidebarIcon" />
+              Taux de mortalité
+            </li>
             
-            <li className="sidebarListItem">
-              <AttachMoney className="sidebarIcon" />
-              Transactions
-            </li>
-            <li className="sidebarListItem">
-              <BarChart className="sidebarIcon" />
-              Reports
-            </li>
           </ul>
         </div>
-        <div className="sidebarMenu">
+       {/* <div className="sidebarMenu">
           <h3 className="sidebarTitle">Notifications</h3>
           <ul className="sidebarList">
             <li className="sidebarListItem">
@@ -97,6 +100,8 @@ export default function Sidebar() {
             </li>
           </ul>
         </div>
+  */}
+
       </div>
     </div>
   );
