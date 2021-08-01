@@ -111,7 +111,7 @@ const Elevage1 = props => {
         <div className="edit-form">
           <div className="elevageTitleContainer">
             <h1 className="elevageTitle">Edit Elevage</h1>
-            <Link to="/newUser">
+            <Link to="/newElevage">
               <button className="elevageAddButton">Create</button>
             </Link>
           </div>

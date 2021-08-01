@@ -1,14 +1,14 @@
 import React from "react";
 import "./topbar.css";
-import { NotificationsNone, Language, Settings } from "@material-ui/icons";
-import logo from './kairos.jpg';
+import { NotificationsNone, Language, Settings, Height } from "@material-ui/icons";
+import logo from './kairos.png';
 
 export default function Topbar() {
   return (
     <div className="topbar">
       <div className="topbarWrapper">
         <div className="topLeft">
-          <span className="logo">KAIROS</span>
+          <img src={logo} width="100"  />
         </div>
         <div className="topRight">
           <div className="topbarIconContainer">

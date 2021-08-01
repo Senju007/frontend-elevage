@@ -11,8 +11,7 @@ import NewProduct from './pages/newProduct/NewProduct';
 import ProductList from './pages/productList/ProductList';
 import ElevageList from './pages/elevageList/elevageList';
 import Elevage from './pages/elevage/Elevage';
-import Elevage1 from './pages/elevage/elevage1';
-import ElevagesList1 from './pages/elevageList/elevageList1';
+import NewElevage from './pages/newElevage/NewElevage';
 
 function App() {
   return (
@@ -30,8 +29,8 @@ function App() {
           <Route path="/user/:userId">
             <User />
           </Route>
-          <Route path="/newUser">
-            <NewUser />
+          <Route path="/newElevage">
+            <NewElevage />
           </Route>
           <Route path="/products">
             <ProductList />
@@ -40,7 +39,7 @@ function App() {
             <ElevageList />
           </Route>
           <Route path="/elevage/:id">
-            <Elevage1/>
+            <Elevage/>
           </Route>
           <Route path="/product/:productId">
             <Product />
