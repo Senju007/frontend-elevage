@@ -1,0 +1,51 @@
+.vaccinList {
+    flex: 6;
+  }
+  
+  
+  
+  .vaccinDetails {
+    flex: 4;
+  }
+  
+  .vaccinListUser {
+    display: flex;
+    align-items: center;
+  }
+  
+  .vaccinListImg {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+  }
+  
+  .vaccinListEdit{
+      border: none;
+      border-radius: 10px;
+      padding: 5px 10px;
+      background-color: #3bb077;
+      color: white;
+      cursor: pointer;
+      margin-right: 20px;
+  }
+  
+  .vaccinListDelete{
+      color: red;
+      cursor: pointer;
+  }
+  
+  .tableau{
+    display: flex;
+    align-items: center;
+    height: 60%;
+  }
+  
+  .details{
+    flex: 2;
+    padding: 20px;
+    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    margin-left: 20px;
+  }

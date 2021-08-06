@@ -1,9 +1,9 @@
-import "./elevageList.css";
+import "./vaccinList.css";
 import { DataGrid } from "@material-ui/data-grid";
 import { DeleteOutline } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import ElevageDataService from "../../services/ElevageServices";
+import VaccinDataService from "../../services/VaccinServices";
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -13,15 +13,15 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Alert from '@material-ui/lab/Alert';
 
 
-export default function ElevageList() {
-  const [elevage, setElevage] = useState([]);
-  const [currentElevage, setCurrentElevage] = useState(null);
+export default function VaccinList() {
+  const [vaccin, setVaccin] = useState([]);
+  const [currentVaccin, setCurrentVaccin] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(-1);
   const [open, setOpen] = React.useState(false)
   const [id , setId] = useState(null);
 
   useEffect(() => {
-    retrieveElevage();
+    retrieveVaccin();
   }, []);
 
   const handleClickOpen = (id) => {
@@ -34,22 +34,22 @@ export default function ElevageList() {
   };
 
 
-  const setActiveElevage = (elevage, index) => {
-    setCurrentElevage(elevage);
+  const setActiveVaccin = (vaccin, index) => {
+    setCurrentVaccin(vaccin);
     setCurrentIndex(index);
   };
 
   const refreshList = () => {
-    retrieveElevage();
-    setCurrentElevage(null);
+    retrieveVaccin();
+    setCurrentVaccin(null);
     setCurrentIndex(-1);
   };
 
 
-  const retrieveElevage = () => {
-    ElevageDataService.getAll()
+  const retrieveVaccin = () => {
+    VaccinDataService.getAll()
       .then(response => {
-        setElevage(response.data);
+        setVaccin(response.data);
         console.log(response.data);
       })
       .catch(e => {
@@ -58,8 +58,8 @@ export default function ElevageList() {
   };
 
 
-  const deleteElevage = (id) => {
-    ElevageDataService.remove(id)
+  const deleteVaccin = (id) => {
+    VaccinDataService.remove(id)
       .then(response => {
         console.log(response.data);
         handleClose();
@@ -72,22 +72,27 @@ export default function ElevageList() {
 
 
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
-    { field: "date_debut", headerName: "Date de debut", width: 200 },
+    { field: "id", headerName: "ID", width: 100 },
+    { field: "nom", headerName: "Nom", width: 150 },
     {
-      field: "nb_poulet",
-      headerName: "Nombre poulet",
-      width: 200,
+      field: "elevage",
+      headerName: "Elevage",
+      width: 150,
     },
     {
-      field: "type",
-      headerName: "Type",
-      width: 160,
+      field: "date_prescrit",
+      headerName: "Date prescrit",
+      width: 150,
     },
     {
-      field: "etat",
-      headerName: "Etat",
-      width: 160,
+        field: "prix_total",
+        headerName: "Prix total",
+        width: 150,
+    },
+    {
+        field: "etat",
+        headerName: "Etat",
+        width: 130,
     },
     {
       field: "action",
@@ -97,14 +102,14 @@ export default function ElevageList() {
       renderCell: (params, index) => {
         return (
           <>
-            <Link to={"/elevage/" + params.row.id}>
-              <button className="elevageListEdit" onClick={() => setActiveElevage(params, index)} key={params.row.id}>Bilan</button>
+            <Link to={"/vaccin/" + params.row.id}>
+              <button className="vaccinListEdit" onClick={() => setActiveVaccin(params, index)} key={params.row.id}>Edit</button>
             </Link>
 
             <DeleteOutline
-              className="elevageListDelete"
+              className="vaccinListDelete"
 
-              //onClick={() => deleteElevage(params.row.id)}
+              //onClick={() => deleteVaccin(params.row.id)}
               onClick={() => handleClickOpen(params.row.id)}
             />
           </>
@@ -114,16 +119,13 @@ export default function ElevageList() {
   ];
 
   return (
-    
-    <div className="elevageList">
-      <Link to="/newElevage">
-              <button className="elevageAddButton">Ajouter</button>
-            </Link>
+    <div className="vaccinList">
       <DataGrid
-        rows={elevage}
+        rows={vaccin}
         disableSelectionOnClick
         columns={columns}
         pageSize={8}
+        checkboxSelection
       />
 
 
@@ -143,7 +145,7 @@ export default function ElevageList() {
           <Button onClick={handleClose} color="primary">
             Annuler
           </Button>
-          <Button onClick={() => deleteElevage(id)} color="primary" autoFocus>
+          <Button onClick={() => deleteVaccin(id)} color="primary" autoFocus>
             Poursuivre
           </Button>
         </DialogActions>

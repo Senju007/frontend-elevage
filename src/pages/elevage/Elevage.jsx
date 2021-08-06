@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ElevageDataService from "../../services/ElevageServices";
+import NourritureDataService from "../../services/NourritureServices";
+import VaccinDataService from "../../services/VaccinServices";
 import {
   CalendarToday,
   LocationSearching,
@@ -13,13 +15,8 @@ import {
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
 import "./elevage.css";
-import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import NativeSelect from '@material-ui/core/NativeSelect';
+import { DataGrid } from "@material-ui/data-grid";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -39,6 +36,8 @@ const Elevage1 = props => {
     type: "",
     etat: "",
   };
+  const [vaccin, setVaccin] = useState([]);
+  const [nourriture, setNourriture] = useState([]);
   const [currentElevage, setCurrentElevage] = useState(initialElevageState);
   const [message, setMessage] = useState("");
   const classes = useStyles();
@@ -63,6 +62,28 @@ const Elevage1 = props => {
     });
   };
 
+  const retrieveNourriture = () => {
+    NourritureDataService.getAll()
+      .then(response => {
+        setNourriture(response.data);
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
+
+  const retrieveVaccin = () => {
+    VaccinDataService.getAll()
+      .then(response => {
+        setVaccin(response.data);
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
+
 
   const getElevage = id => {
     ElevageDataService.get(id)
@@ -75,7 +96,20 @@ const Elevage1 = props => {
       });
   };
 
+  const getNourriture = id => {
+    ElevageDataService.getNourriture(id)
+      .then(response => {
+        setNourriture(response.data);
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
+
   useEffect(() => {
+    getNourriture(props.match.params.id);
+    retrieveVaccin();
     getElevage(props.match.params.id);
   }, [props.match.params.id]);
 
@@ -104,15 +138,63 @@ const Elevage1 = props => {
   };
 
 
+  const columns = [
+    
+    {
+        field: "quantité_journalière",
+        headerName: "Qte jr (g)",
+        width: 150,
+    },
+    {
+      field: "quantité_total",
+      headerName: "Qte T (g)",
+      width: 150,
+    },
+
+    {
+        field: "etat",
+        headerName: "Etat",
+        width: 130,
+    },
+    {
+        field: "prix",
+        headerName: "Prix",
+        width: 150,
+    },
+  ];
+
+
+  const columns_vaccin = [
+    { field: "nom", headerName: "Nom", width: 150 },
+    {
+      field: "date_prescrit",
+      headerName: "Date prescrit",
+      width: 180,
+    },
+    {
+        field: "prix_total",
+        headerName: "Prix total",
+        width: 150,
+    },
+    {
+        field: "etat",
+        headerName: "Etat",
+        width: 130,
+    },
+  ];
+
+
+
+
   return (
     <div className="elevage">
       {currentElevage ? (
 
         <div className="edit-form">
           <div className="elevageTitleContainer">
-            <h1 className="elevageTitle">Edit Elevage</h1>
+            <h1 className="elevageTitle">Bilan global</h1>
             <Link to="/newElevage">
-              <button className="elevageAddButton">Create</button>
+              <button className="elevageAddButton">Ajouter</button>
             </Link>
           </div>
           <form>
@@ -149,62 +231,27 @@ const Elevage1 = props => {
 
 
               <div className="elevageUpdate">
-                <span className="elevageUpdateTitle">Edit</span>
-                <form className="elevageUpdateForm">
-                  <div className="elevageUpdateLeft">
-                    <div className="elevageUpdateItem">
-                      <label>Type</label>
-                      <NativeSelect
-                        value={state.name}
-                        onChange={handleChangeType}
-                        inputProps={{
-                          type: 'type',
-                          id: 'name-native-disabled',
-                        }}
-                      >
-                        <option value="">None</option>
-                        <option value="Poule pondeuse">Poule pondeuse</option>
-                        <option value="poulet de chair">Poulet de chair</option>
-                      </NativeSelect>
+                <span className="elevageUpdateTitle">Nourritures</span>
+                  <DataGrid
+                     rows={nourriture}
+                     disableSelectionOnClick
+                     columns={columns}
+                     pageSize={8}
+                  />
 
 
-                    </div>
-                    <div className="elevageUpdateItem">
-                      <label>Date debut</label>
-                      <input
-                        type="text"
-                        placeholder="..."
-                        className="elevageUpdateInput"
-                      />
-                    </div>
-                    <div className="elevageUpdateItem">
-                      <label>Nombre de poulet</label>
-                      <input
-                        type="text"
-                        placeholder="..."
-                        className="elevageUpdateInput"
-                      />
-                    </div>
-                    <div className="elevageUpdateItem">
-                      <label>Etat</label>
-                      <NativeSelect
-                        value={state.name}
-                        onChange={handleChangeEtat}
-                        inputProps={{
-                          etat: 'etat',
-                          id: 'name-native-disabled',
-                        }}
-                      >
-                        <option value="">None</option>
-                        <option value="En cours">En cours</option>
-                        <option value="Terminer">Terminer</option>
-                      </NativeSelect>
-                    </div>
-                  </div>
-                  <div className="elevageUpdateRight">
-                    <button className="elevageUpdateButton">Update</button>
-                  </div>
-                </form>
+                
+                <span className="elevageUpdateTitle">Vaccin</span>
+                <DataGrid
+                  rows={vaccin}
+                  disableSelectionOnClick
+                  columns={columns_vaccin}
+                  pageSize={8}
+                  checkboxSelection
+                />
+                    
+
+
               </div>
             </div>
           </form>

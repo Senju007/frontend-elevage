@@ -5,13 +5,15 @@ import Home from './pages/home/Home';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import UserList from './pages/userList/UserList';
 import User from './pages/user/User';
-import NewUser from './pages/newUser/NewUser';
+import VaccinList from './pages/vaccinList/vaccinList';
 import Product from './pages/product/Product';
 import NewProduct from './pages/newProduct/NewProduct';
 import ProductList from './pages/productList/ProductList';
 import ElevageList from './pages/elevageList/elevageList';
 import Elevage from './pages/elevage/Elevage';
 import NewElevage from './pages/newElevage/NewElevage';
+import NourritureList from './pages/nourritureList/nourritureList';
+import Nourriture from './components/nourriture/Nourriture';
 
 function App() {
   return (
@@ -41,11 +43,17 @@ function App() {
           <Route path="/elevage/:id">
             <Elevage/>
           </Route>
+          <Route path="/nourriture/:id">
+            <Nourriture/>
+          </Route>
           <Route path="/product/:productId">
             <Product />
           </Route>
-          <Route path="/newproduct">
-            <NewProduct />
+          <Route path="/vaccinList">
+            <VaccinList />
+          </Route>
+          <Route path="/nourritureList">
+            <NourritureList />
           </Route>
         </Switch>
       </div>

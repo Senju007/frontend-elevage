@@ -49,11 +49,13 @@ export default function Sidebar() {
         <div className="sidebarMenu">
           <h3 className="sidebarTitle">Ressource Menu</h3>
           <ul className="sidebarList">
-            <Link to="/users" className="link">
+            <Link to="/nourritureList" className="link">
               <li className="sidebarListItem">
                 <RestaurantMenuIcon className="sidebarIcon" />
                  Nourriture
               </li>
+            </Link>
+            <Link to="/vaccinList" className="link">
               <li className="sidebarListItem">
                 <SecurityIcon className="sidebarIcon" />
                 Vaccin

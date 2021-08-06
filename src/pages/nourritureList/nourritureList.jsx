@@ -1,9 +1,9 @@
-import "./elevageList.css";
+import "./nourritureList.css";
 import { DataGrid } from "@material-ui/data-grid";
 import { DeleteOutline } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import ElevageDataService from "../../services/ElevageServices";
+import NourritureDataService from "../../services/NourritureServices";
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -13,15 +13,15 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Alert from '@material-ui/lab/Alert';
 
 
-export default function ElevageList() {
-  const [elevage, setElevage] = useState([]);
-  const [currentElevage, setCurrentElevage] = useState(null);
+export default function NourritureList() {
+  const [nourriture, setNourriture] = useState([]);
+  const [currentNourriture, setCurrentNourriture] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(-1);
   const [open, setOpen] = React.useState(false)
   const [id , setId] = useState(null);
 
   useEffect(() => {
-    retrieveElevage();
+    retrieveNourriture();
   }, []);
 
   const handleClickOpen = (id) => {
@@ -34,22 +34,22 @@ export default function ElevageList() {
   };
 
 
-  const setActiveElevage = (elevage, index) => {
-    setCurrentElevage(elevage);
+  const setActiveNourriture = (nourriture, index) => {
+    setCurrentNourriture(nourriture);
     setCurrentIndex(index);
   };
 
   const refreshList = () => {
-    retrieveElevage();
-    setCurrentElevage(null);
+    retrieveNourriture();
+    setCurrentNourriture(null);
     setCurrentIndex(-1);
   };
 
 
-  const retrieveElevage = () => {
-    ElevageDataService.getAll()
+  const retrieveNourriture = () => {
+    NourritureDataService.getAll()
       .then(response => {
-        setElevage(response.data);
+        setNourriture(response.data);
         console.log(response.data);
       })
       .catch(e => {
@@ -58,8 +58,8 @@ export default function ElevageList() {
   };
 
 
-  const deleteElevage = (id) => {
-    ElevageDataService.remove(id)
+  const deleteNourriture = (id) => {
+    NourritureDataService.remove(id)
       .then(response => {
         console.log(response.data);
         handleClose();
@@ -72,22 +72,35 @@ export default function ElevageList() {
 
 
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
-    { field: "date_debut", headerName: "Date de debut", width: 200 },
     {
-      field: "nb_poulet",
-      headerName: "Nombre poulet",
-      width: 200,
+      field: "elevage",
+      headerName: "E",
+      width: 90,
     },
     {
-      field: "type",
-      headerName: "Type",
+      field: "date_debut",
+      headerName: "Debut",
       width: 160,
     },
     {
-      field: "etat",
-      headerName: "Etat",
+      field: "date_fin",
+      headerName: "Fin",
       width: 160,
+    },
+    {
+        field: "quantité_journalière",
+        headerName: "Qte jr (g)",
+        width: 150,
+    },
+    {
+        field: "etat",
+        headerName: "Etat",
+        width: 130,
+    },
+    {
+        field: "prix",
+        headerName: "Prix",
+        width: 150,
     },
     {
       field: "action",
@@ -97,14 +110,14 @@ export default function ElevageList() {
       renderCell: (params, index) => {
         return (
           <>
-            <Link to={"/elevage/" + params.row.id}>
-              <button className="elevageListEdit" onClick={() => setActiveElevage(params, index)} key={params.row.id}>Bilan</button>
+            <Link to={"/nourriture/" + params.row.id}>
+              <button className="nourritureListEdit" onClick={() => setActiveNourriture(params, index)} key={params.row.id}>Details</button>
             </Link>
 
             <DeleteOutline
-              className="elevageListDelete"
+              className="nourritureListDelete"
 
-              //onClick={() => deleteElevage(params.row.id)}
+              //onClick={() => deleteNourriture(params.row.id)}
               onClick={() => handleClickOpen(params.row.id)}
             />
           </>
@@ -115,15 +128,16 @@ export default function ElevageList() {
 
   return (
     
-    <div className="elevageList">
-      <Link to="/newElevage">
-              <button className="elevageAddButton">Ajouter</button>
+    <div className="nourritureList">
+      <Link to="/newNourriture">
+              <button className="nourritureAddButton">Ajouter</button>
             </Link>
       <DataGrid
-        rows={elevage}
+        rows={nourriture}
         disableSelectionOnClick
         columns={columns}
         pageSize={8}
+        checkboxSelection
       />
 
 
@@ -143,7 +157,7 @@ export default function ElevageList() {
           <Button onClick={handleClose} color="primary">
             Annuler
           </Button>
-          <Button onClick={() => deleteElevage(id)} color="primary" autoFocus>
+          <Button onClick={() => deleteNourriture(id)} color="primary" autoFocus>
             Poursuivre
           </Button>
         </DialogActions>

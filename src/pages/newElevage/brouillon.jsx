@@ -3,26 +3,19 @@ import NativeSelect from '@material-ui/core/NativeSelect';
 import 'date-fns';
 import ElevageDataService from "../../services/ElevageServices";
 import DateFnsUtils from '@date-io/date-fns';
-import Button from '@material-ui/core/Button';
-import { moment } from "moment";
 import React, { useState, useEffect } from "react";
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 
 
 export default function NewElevage() {
   const initialElevageState = {
     id: null,
     type: "",
-    date_debut: "2021-01-01",
+    date_debut: "",
     nb_poulet: "",
   };
 
@@ -33,7 +26,6 @@ export default function NewElevage() {
     type: 'Poulet de chair',
     etat: 'En cours',
   });
-  
 
 
   const saveElevage = () => {
@@ -80,7 +72,7 @@ export default function NewElevage() {
 
   const handleChangeType = (event) => {
     const type = event.target.type;
-    setElevage({ ...elevage, type: type });
+    setElevage({ ...elevage, type : type });
     setState({
       ...state,
       [type]: event.target.value,
@@ -88,65 +80,36 @@ export default function NewElevage() {
     setElevage({ ...elevage, type: event.target.value });
   };
 
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-    console.log(date.getFullYear()+'-'+date.getMonth()+'-'+date.getDate())
-    setElevage({ ...elevage, date_debut: date.getFullYear()+'-'+date.getMonth()+'-'+date.getDate() });
-  };
 
-
-
-
+  
   return (
     <div className="newElevage">
       {submitted ? (
         <div>
           <h4>You submitted successfully!</h4>
-          <Button primary onClick={newElevage}>
+          <button primary onClick={newElevage}>
             Ajouter
-          </Button>
+          </button>
         </div>
-
-        
       ) : (
         <div>
           <div className="newElevageItem">
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <KeyboardDatePicker
-              margin="normal"
-              id="date_debut"
-              label="Date de debut"
-              defaultValue= "2021-01-01"
-              format="yyyy-MM-dd"
-              value={elevage.date_debut}
-              name="date_debut"
-              onChange={handleDateChange}
-              KeyboardButtonProps={{
-                'aria-label': 'change date',
-              }}
-            />
-          </MuiPickersUtilsProvider>
-
-          </div>
-
-
-          <div className="newElevageItem">
-            <label>Type</label>
-            <NativeSelect
-              value={elevage.type}
-              onChange={handleChangeType}
-              name="type"
-              id="type"
-              inputProps={{
-                type: 'type',
-                id: 'name-native-disabled',
-              }}
-            >
-              <option value="">Choisir</option>
-              <option value="Poule pondeuse">Poule pondeuse</option>
-              <option value="Poulet de chair">Poulet de chair</option>
-            </NativeSelect>
-
+                      <label>Type</label>
+                      <NativeSelect
+                        value={elevage.type}
+                        onChange={handleChangeType}
+                        name = "type"
+                        id = "type"
+                        inputProps={{
+                          type: 'type',
+                          id: 'name-native-disabled',
+                        }}
+                      >
+                        <option value="">Choisir</option>
+                        <option value="Poule pondeuse">Poule pondeuse</option>
+                        <option value="Poulet de chair">Poulet de chair</option>
+                      </NativeSelect>
+        
           </div>
           <div className="newElevageItem">
             <label htmlFor="cin">Nombre de poulet</label>
@@ -160,9 +123,8 @@ export default function NewElevage() {
               name="nb_poulet"
             />
           </div>
-          
-          <button className="newElevageButton" onClick={saveElevage} >
-            Enregistrer
+          <button primary onClick={saveElevage} >
+            Submit
           </button>
         </div>
 

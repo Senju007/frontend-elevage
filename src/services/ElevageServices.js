@@ -24,6 +24,10 @@ const getCount= () => {
   return http.get("/elevage/nombre");
 };
 
+const getNourriture = id =>{
+  return http.get(`/elevage/nourriture/${id}`);
+}
+
 
 export default {
   getAll,
@@ -32,4 +36,5 @@ export default {
   update,
   remove,
   getCount,
+  getNourriture,
 };
