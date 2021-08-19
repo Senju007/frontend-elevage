@@ -20,8 +20,6 @@ const remove = id => {
   return http.delete(`/nourriture/${id}`);
 };
 
-
-
 const getCount= () => {
   return http.get("/nourriture/nombre");
 };

@@ -90,8 +90,10 @@ export default function NewElevage() {
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
-    console.log(date.getFullYear()+'-'+date.getMonth()+'-'+date.getDate())
-    setElevage({ ...elevage, date_debut: date.getFullYear()+'-'+date.getMonth()+'-'+date.getDate() });
+    var dateFormat = require("dateformat");
+    var date1 = dateFormat(date, "yyyy-mm-dd");
+    console.log(date1)
+    setElevage({ ...elevage, date_debut: date1 });
   };
 
 
@@ -116,9 +118,8 @@ export default function NewElevage() {
               margin="normal"
               id="date_debut"
               label="Date de debut"
-              defaultValue= "2021-01-01"
               format="yyyy-MM-dd"
-              value={elevage.date_debut}
+              value={selectedDate}
               name="date_debut"
               onChange={handleDateChange}
               KeyboardButtonProps={{

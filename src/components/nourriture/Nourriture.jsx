@@ -36,6 +36,7 @@ const Nourriture = props => {
     date_fin: "",
     quantité_journalière:"",
     quantité_total: "",
+    total_journalière:"",
     prix: "",
     etat: "",
     details: "",
@@ -43,10 +44,11 @@ const Nourriture = props => {
     poids_relevé: "",
     observation:""
   };
+
   const [currentNourriture, setCurrentNourriture] = useState(initialNourritureState);
   const [message, setMessage] = useState("");
   const classes = useStyles();
-
+  const [etat, setEtat] = useState('');
   const [state, setState] = React.useState({
     type: 'Poulet de chair',
     etat: 'En cours',
@@ -54,13 +56,21 @@ const Nourriture = props => {
 
   const handleChangeEtat = (event) => {
     const etat = event.target.etat;
-    setState({
-      ...state,
-      [etat]: event.target.value,
-    });
-    
+    setCurrentNourriture({ ...currentNourriture, etat: etat });
+    setCurrentNourriture({ ...currentNourriture, etat : event.target.value  });
   };
 
+  const handleChangePrix = (event) => {
+    const prix = event.target.etat;
+    setCurrentNourriture({ ...currentNourriture, prix: prix });
+    setCurrentNourriture({ ...currentNourriture, prix : event.target.value  });
+  };
+
+  const handleChangePoids = (event) => {
+    const poids = event.target.etat;
+    setCurrentNourriture({ ...currentNourriture, poids_prelevé: poids });
+    setCurrentNourriture({ ...currentNourriture, poids_prelevé : event.target.value  });
+  };
 
   const getNourriture = id => {
     NourritureDataService.get(id)
@@ -85,8 +95,18 @@ const Nourriture = props => {
   const updatePublished = status => {
     var data = {
       id: currentNourriture.id,
+      date_debut : currentNourriture.date_debut,
+      date_fin : currentNourriture.date_fin,
+      elevage: currentNourriture.elevage,
       prix: currentNourriture.prix,
       etat: currentNourriture.etat,
+      total_journalière : currentNourriture.total_journalière,
+      quantité_total : currentNourriture.quantité_total,
+      details : currentNourriture.details,
+      poids_estimé : currentNourriture.poids_estimé,
+      poids_prelevé : currentNourriture.poids_prelevé,
+      observation: currentNourriture.observation
+
     };
 
     NourritureDataService.update(currentNourriture.id, data)
@@ -99,6 +119,17 @@ const Nourriture = props => {
       });
   };
 
+  const updateNourriture = () => {
+    console.log('clicked')
+    NourritureDataService.update(currentNourriture.id, currentNourriture)
+      .then(response => {
+        console.log(response.data);
+        setMessage("The nourriture was updated successfully!");
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
 
   return (
     <div className="nourriture">
@@ -111,7 +142,6 @@ const Nourriture = props => {
               <button className="nourritureAddButton">Ajouter</button>
             </Link>
           </div>
-          <form>
             <div className="nourritureContainer">
               <div className="nourritureShow">
                 <div className="nourritureShowTop">
@@ -143,6 +173,9 @@ const Nourriture = props => {
                     <span className="nourritureShowInfoTitle">Qte journaliere : {currentNourriture.quantité_journalière} g</span>
                   </div>
                   <div className="nourritureShowInfo">
+                    <span className="nourritureShowInfoTitle">Qte total journaliere : {currentNourriture.total_journalière} g</span>
+                  </div>
+                  <div className="nourritureShowInfo">
                     <span className="nourritureShowInfoTitle">Qte total : {currentNourriture.quantité_total} g</span>
                   </div>
                   <div className="nourritureShowInfo">
@@ -153,6 +186,9 @@ const Nourriture = props => {
                   </div>
                   <div className="nourritureShowInfo">
                     <span className="nourritureShowInfoTitle">Poid prelevé : {currentNourriture.poids_prelevé}</span>
+                  </div>
+                  <div className="nourritureShowInfo">
+                    <span className="nourritureShowInfoTitle">Observation : {currentNourriture.observation}</span>
                   </div>
                 </div>
               </div>
@@ -170,7 +206,19 @@ const Nourriture = props => {
                          id="nb_poulet"
                          required
                          value={currentNourriture.prix}
-                         onChange={handleInputChange}
+                         onChange={handleChangePrix}
+                         name="nb_poulet"
+                        />
+                   </div>
+                   <div className="nourritureUpdateItem">
+                       <label htmlFor="cin">Poids prelevé sur les 10% </label>
+                        <input
+                         type="text"
+                         className="form-control"
+                         id="nb_poulet"
+                         required
+                         value={currentNourriture.poids_prelevé}
+                         onChange={handleChangePoids}
                          name="nb_poulet"
                         />
                    </div>
@@ -180,8 +228,8 @@ const Nourriture = props => {
                       <NativeSelect
                         value={currentNourriture.etat}
                         onChange={handleChangeEtat}
-                        name="type"
-                        id="type"
+                        name="etat"
+                        id="etat"
                         inputProps={{
                           type: 'etat',
                           id: 'name-native-disabled',
@@ -189,29 +237,31 @@ const Nourriture = props => {
                       >
                         <option value="">Choisir</option>
                         <option value="En cours">En cours</option>
-                        <option value="Terminer">Terminer</option>
+                        <option value="Terminé">Terminé</option>
                       </NativeSelect>
+
+
+                      
 
           </div>
                     
 
 
                   </div>
-                  <div className="nourritureUpdateRight">
-
-
-
-                  </div>
+                  
                 </form>
+
+                <div className="nourritureUpdateRight">
+                    <button className="nourritureAddButton" onClick={updateNourriture}>Modifier</button>
+                </div>
               </div>
             </div>
-          </form>
           <p>{message}</p>
         </div>
       ) : (
         <div>
           <br />
-          <p>Please click on a Proprietaire...</p>
+          <p>Please click on a Nourriture...</p>
         </div>
       )}
     </div>
