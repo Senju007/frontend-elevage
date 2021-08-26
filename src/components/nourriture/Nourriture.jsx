@@ -3,21 +3,13 @@ import NourritureDataService from "../../services/NourritureServices";
 import {
   CalendarToday,
   PermIdentity,
-  PhoneAndroid,
-  Publish,
-  ToggleOn,
-  Pets,
 } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
 import "./nourriture.css";
-import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
 import NativeSelect from '@material-ui/core/NativeSelect';
+import NumberFormat from 'react-number-format';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -32,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
 const Nourriture = props => {
   const initialNourritureState = {
     id: null,
+    nom:"",
     date_debut: "",
     date_fin: "",
     quantité_journalière:"",
@@ -44,7 +37,6 @@ const Nourriture = props => {
     poids_relevé: "",
     observation:""
   };
-
   const [currentNourriture, setCurrentNourriture] = useState(initialNourritureState);
   const [message, setMessage] = useState("");
   const classes = useStyles();
@@ -95,6 +87,7 @@ const Nourriture = props => {
   const updatePublished = status => {
     var data = {
       id: currentNourriture.id,
+      nom : currentNourriture.nom,
       date_debut : currentNourriture.date_debut,
       date_fin : currentNourriture.date_fin,
       elevage: currentNourriture.elevage,
@@ -155,6 +148,10 @@ const Nourriture = props => {
                   <span className="nourritureShowTitle">Details</span>
                   <div className="nourritureShowInfo">
                     <PermIdentity className="nourritureShowIcon" />
+                    <span className="nourritureShowInfoTitle">Nom : {currentNourriture.nom}</span>
+                  </div>
+                  <div className="nourritureShowInfo">
+                    <PermIdentity className="nourritureShowIcon" />
                     <span className="nourritureShowInfoTitle">Etat : {currentNourriture.etat}</span>
                   </div>
                   <div className="nourritureShowInfo">
@@ -178,8 +175,9 @@ const Nourriture = props => {
                   <div className="nourritureShowInfo">
                     <span className="nourritureShowInfoTitle">Qte total : {currentNourriture.quantité_total} g</span>
                   </div>
+                  
                   <div className="nourritureShowInfo">
-                    <span className="nourritureShowInfoTitle">Prix total : {currentNourriture.prix}</span>
+                    <span className="nourritureShowInfoTitle">Prix total : <NumberFormat value={currentNourriture.prix} displayType={'text'} thousandSeparator={true} prefix={'Ar  '}/> </span>
                   </div>
                   <div className="nourritureShowInfo">
                     <span className="nourritureShowInfoTitle">Poid estimé : {currentNourriture.poids_estimé}</span>
@@ -200,16 +198,23 @@ const Nourriture = props => {
                   <div className="nourritureUpdateLeft">
                     <div className="nourritureUpdateItem">
                        <label htmlFor="cin">Prix total (Ar)</label>
-                        <input
-                         type="text"
-                         className="form-control"
-                         id="nb_poulet"
-                         required
-                         value={currentNourriture.prix}
-                         onChange={handleChangePrix}
-                         name="nb_poulet"
-                        />
+                        <NumberFormat 
+                        thousandsGroupStyle="thousand"
+                        value={currentNourriture.prix}
+                        prefix="Ar "
+                        decimalSeparator = "."
+                        displayType="input"
+                        type="text"
+                        thousandSeparator={true}
+                        allowNegative={false}
+                        onValueChange={(values) => {
+                          const {formattedValue , value} = values
+                          setCurrentNourriture({ ...currentNourriture, prix: value });
+                        }}
+                        name="nb_poulet"
+                     />
                    </div>
+                     
                    <div className="nourritureUpdateItem">
                        <label htmlFor="cin">Poids prelevé sur les 10% </label>
                         <input

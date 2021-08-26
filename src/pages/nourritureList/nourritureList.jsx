@@ -11,7 +11,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Alert from '@material-ui/lab/Alert';
-
+import NumberFormat from 'react-number-format';
 
 export default function NourritureList() {
   const [nourriture, setNourriture] = useState([]);
